@@ -1,7 +1,6 @@
 package com.devtoolbox;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MainApp extends JFrame {
 
@@ -9,6 +8,7 @@ public class MainApp extends JFrame {
 
         setTitle("Dev Toolbox");
         setSize(800,600);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JTabbedPane tabs = new JTabbedPane();
@@ -25,6 +25,11 @@ public class MainApp extends JFrame {
     }
 
     public static void main(String[] args) {
+
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {}
+
         new MainApp();
     }
 }

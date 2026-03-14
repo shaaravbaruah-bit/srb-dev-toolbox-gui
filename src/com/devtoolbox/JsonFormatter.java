@@ -5,24 +5,57 @@ import java.awt.*;
 
 public class JsonFormatter extends JPanel {
 
-    JTextArea input = new JTextArea(10,40);
-    JTextArea output = new JTextArea(10,40);
+    JTextArea input = new JTextArea();
+    JTextArea output = new JTextArea();
+
     JButton formatBtn = new JButton("Format JSON");
+    JButton clearBtn = new JButton("Clear");
 
     public JsonFormatter(){
 
         setLayout(new BorderLayout());
 
-        JPanel center = new JPanel(new GridLayout(2,1));
-        center.add(new JScrollPane(input));
-        center.add(new JScrollPane(output));
+        input.setLineWrap(true);
+        output.setLineWrap(true);
 
-        add(center,BorderLayout.CENTER);
-        add(formatBtn,BorderLayout.SOUTH);
+        JPanel textPanel = new JPanel(new GridLayout(2,1));
+
+        textPanel.add(new JScrollPane(input));
+        textPanel.add(new JScrollPane(output));
+
+        JPanel buttonPanel = new JPanel();
+
+        buttonPanel.add(formatBtn);
+        buttonPanel.add(clearBtn);
+
+        add(textPanel,BorderLayout.CENTER);
+        add(buttonPanel,BorderLayout.SOUTH);
 
         formatBtn.addActionListener(e -> {
+
             String json = input.getText();
-            output.setText(json); // later formatting logic add karenge
+
+            try {
+
+                json = json.replace("{", "{\n");
+                json = json.replace("}", "\n}");
+                json = json.replace(",", ",\n");
+
+                output.setText(json);
+
+            } catch (Exception ex) {
+
+                output.setText("Invalid JSON");
+
+            }
+
+        });
+
+        clearBtn.addActionListener(e -> {
+
+            input.setText("");
+            output.setText("");
+
         });
     }
 }

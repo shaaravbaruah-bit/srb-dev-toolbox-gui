@@ -13,29 +13,48 @@ public class PasswordGenerator extends JPanel {
 
     public PasswordGenerator(){
 
-        setLayout(new FlowLayout());
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        add(new JLabel("Length:"));
-        add(lengthField);
-        add(generateBtn);
-        add(result);
+        gbc.insets = new Insets(10,10,10,10);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        add(new JLabel("Length:"), gbc);
+
+        gbc.gridx = 1;
+        add(lengthField, gbc);
+
+        gbc.gridx = 2;
+        add(generateBtn, gbc);
+
+        gbc.gridx = 3;
+        add(result, gbc);
 
         generateBtn.addActionListener(e -> generatePassword());
     }
 
     private void generatePassword(){
 
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
-        Random rand = new Random();
+        try{
 
-        int length = Integer.parseInt(lengthField.getText());
+            String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+            Random rand = new Random();
 
-        StringBuilder password = new StringBuilder();
+            int length = Integer.parseInt(lengthField.getText());
 
-        for(int i=0;i<length;i++){
-            password.append(chars.charAt(rand.nextInt(chars.length())));
+            StringBuilder password = new StringBuilder();
+
+            for(int i=0;i<length;i++){
+                password.append(chars.charAt(rand.nextInt(chars.length())));
+            }
+
+            result.setText(password.toString());
+
+        }catch(Exception e){
+
+            result.setText("Invalid length");
+
         }
-
-        result.setText(password.toString());
     }
 }
